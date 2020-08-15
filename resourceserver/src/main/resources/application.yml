@@ -1,0 +1,19 @@
+server:
+  port: 8082
+
+logging:
+  level:
+    root: WARN
+    org.springframework: DEBUG
+    org.springframework.security: DEBUG
+
+####### resource server configuration properties
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # the following is for site authentication
+          # this is the same authorization server as the one configured
+          # for webclient in resourceserver-webclient
+          issuer-uri: ${AUTH_SERVER_B}

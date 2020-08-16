@@ -1,0 +1,34 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    root: WARN
+    org.springframework: DEBUG
+    org.springframework.security: DEBUG
+
+demo:
+  external:
+    resource: http://localhost:8082/external/{count}/repos
+
+####### resource server configuration properties
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # the following is for site authentication
+          issuer-uri: ${AUTH_SERVER_A}
+      # the following is for webclient. the authorization server is the same
+      # as the one configured for external resourceserver
+      client:
+        registration:
+          custom:
+            authorization-grant-type: client_credentials
+            client-id: ${CLIENT_ID_FROM_AUTH_SERVER_B}
+            client-secret: ${CLIENT_SECRET_FROM_AUTH_SERVER_B}
+            scope: demo-external
+            provider: customprovider
+        provider:
+          customprovider:
+            token-uri: ${TOKEN_URI_OF_AUTH_SERVER_FOR_B}
